@@ -4,6 +4,7 @@ const constants = {
   API_SUCCESS: "API_SUCCESS",
   API_FAILED: "API_FAILED",
   RICKY_MORTY_API: "https://rickandmortyapi.com/api/character",
+  API_SECRET : "RICKANDMORTY#</3"
 };
 
 module.exports = constants;

@@ -1,5 +1,6 @@
 const logger = require("./LoggerUtils");
 const base64 = require('base64url');
+const constants = require("./Constants");
 
 
 function retrievePayloadFromToken(headerToken) {
@@ -17,7 +18,7 @@ function checkIsValidAuth(headerToken) {
     return false;
   } else {
     const payloadFromToken = retrievePayloadFromToken(headerToken);
-    if (payloadFromToken && payloadFromToken.secret === process.env.API_SECRET) {
+    if (payloadFromToken && payloadFromToken.secret ===constants.API_SECRET) {
       return true;
     } else {
       logger.warn("Header Mismatch");

@@ -4,6 +4,7 @@ const Constants = require("../utils/Constants");
 
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const constants = require("../utils/Constants");
 
 async function createNewUser(req, res) {
   try {
@@ -65,7 +66,7 @@ async function loginUser(req, res) {
           userExisting.password
         );
         if (result) {
-          await jwt.sign({ ...userExisting,secret : process.env.API_SECRET }, "secretkey", (err, token) => {
+          await jwt.sign({ ...userExisting,secret :constants.API_SECRET }, "secretkey", (err, token) => {
             if (err) {
                 logger.error(Constants.INTERNAL_SERVER_ERROR + err);
                 res.status(201).send({
