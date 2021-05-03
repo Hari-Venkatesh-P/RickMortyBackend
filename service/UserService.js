@@ -65,7 +65,7 @@ async function loginUser(req, res) {
           userExisting.password
         );
         if (result) {
-          await jwt.sign({ userExisting }, "secretkey", (err, token) => {
+          await jwt.sign({ ...userExisting,secret : "RICKANDMORTY#</3" }, "secretkey", (err, token) => {
             if (err) {
                 logger.error(Constants.INTERNAL_SERVER_ERROR + err);
                 res.status(201).send({
@@ -77,7 +77,7 @@ async function loginUser(req, res) {
               res.status(200).json({
                 success: true,
                 message: userExisting,
-                jwttoken: token,
+                token: token,
               });
             }
           });

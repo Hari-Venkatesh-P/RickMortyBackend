@@ -23,10 +23,7 @@ const CartoonSchema = mongoose.Schema({
   status: {
     type: String,
   },
-  type: {
-    type: String,
-  },
-  gender: {
+  species: {
     type: String,
   },
   origin: {
@@ -36,7 +33,7 @@ const CartoonSchema = mongoose.Schema({
     type: urlSchema,
   },
   image: {
-    type: urlSchema,
+    type: String,
   },
 });
 

@@ -50,8 +50,7 @@ async function addCartoon(req, res) {
       cartoonId,
       name,
       status,
-      type,
-      gender,
+      species,
       origin,
       location,
       image,
@@ -60,10 +59,8 @@ async function addCartoon(req, res) {
       typeof cartoonId !== "undefined" ||
       typeof userId !== "undefined" ||
       typeof name !== "undefined" ||
-      typeof name !== "undefined" ||
       typeof status !== "undefined" ||
-      typeof type !== "undefined" ||
-      typeof gender !== "undefined" ||
+      typeof species !== "undefined" ||
       typeof origin !== "undefined" ||
       typeof location !== "undefined" ||
       typeof image !== "undefined"
@@ -78,11 +75,10 @@ async function addCartoon(req, res) {
           cartoonId,
           name,
           status,
-          type,
-          gender,
+          species,
           origin,
           location,
-          image,
+          image : image,
         });
         await newCartoon.save();
         logger.info(Constants.API_SUCCESS);
@@ -116,7 +112,7 @@ async function removeCartoon(req, res) {
   try {
     const { userId, cartoonId } = req.params;
     if (typeof cartoonId !== "undefined" || typeof userId !== "undefined") {
-      const catoonExisting = await Cartoons.findByIdAndDelete({
+      const catoonExisting = await Cartoons.findOneAndRemove({
         cartoonId: cartoonId,
         userId: userId,
       });
@@ -141,8 +137,38 @@ async function removeCartoon(req, res) {
   }
 }
 
+
+async function getCartoonByUserId(req, res) {
+  try {
+    const { userId } = req.params;
+    if (typeof userId !== "undefined") {
+      const cartoons = await Cartoons.find({
+        userId: userId,
+      });
+      logger.info(Constants.API_SUCCESS);
+      res.status(200).send({
+        success: true,
+        message: cartoons,
+      });
+    } else {
+      logger.error(Constants.BAD_REQUEST);
+      res.status(400).send({
+        success: false,
+        message: Constants.BAD_REQUEST,
+      });
+    }
+  } catch (error) {
+    logger.error(Constants.INTERNAL_SERVER_ERROR + error);
+    res.status(500).send({
+      success: false,
+      message: error,
+    });
+  }
+}
+
 module.exports = {
   fetchCartoons,
   addCartoon,
   removeCartoon,
+  getCartoonByUserId,
 };
