@@ -4,7 +4,8 @@ const router = require("express").Router();
 const cors = require("cors");
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
-
+const dotenv = require('dotenv');
+dotenv.config();
 const mongo = require("./mongo/index");
 var dbdetails = mongo.dbdetails;
 
@@ -42,6 +43,10 @@ app.use('/cartoons', CartoonRoute);
 
 const UserRoute = require('./routes/UserRoute');
 app.use('/users', UserRoute);
+
+app.get('/',function(req,res){
+  res.send("Rick Morty API Services")
+})
 
 app.listen(PORT, () => {
     console.log('Server Started on PORT ' + PORT)
